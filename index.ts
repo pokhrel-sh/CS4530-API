@@ -1,6 +1,15 @@
 const express = require("express");
+const cors = require("cors"); // Import cors middleware
 const app = express();
 
+// Enable CORS middleware
+app.use(cors({
+    origin: '*', // Allow all origins (for development purposes). Replace '*' with your frontend URL in production.
+    methods: ['GET', 'POST'], // Allowed HTTP methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+}));
+
+// API endpoint
 app.get("/api/:count", (req, res) => {
     const count = parseInt(req.params.count, 10); 
     const data = {
@@ -22,6 +31,7 @@ app.get("/api/:count", (req, res) => {
     res.json(limitedData); 
 });
 
+// Start the server
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
